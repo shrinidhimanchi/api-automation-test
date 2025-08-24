@@ -1,184 +1,85 @@
-# API AUTOMATION TEST
+# API Automation Test
 
-## This Project helps us in performing the automation testing of REST APIs using CucumberJs & axios
+A lightweight Node.js framework for REST API testing powered by [Cucumber](https://github.com/cucumber/cucumber-js) and [Axios](https://github.com/axios/axios).
 
-- As an automation QA Engineer, this boiler-plate project would definitely helps us in performing the automation testing of REST APIs effectively and efficiently using CucumberJs, axios and other npm libraries. In addition, since the tests are written using Cucumber, it would help any non-technical users to understand the scenario(s) built.
-- This Project was built with a passion to effectively perform quick and efficient way of API tesing.
-- This has helped us in solving the quick delivery to production by performing necessary validations on all of the API test(s) to ensure test deliverables are met.
-- Open Source has taught many things such as share,learn and improve code through the delivery of this API automation testing.
+## Features
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-- [Badges](#badges)
-- [Features](#features)
-- [How To Contribute](#how-to-contribute)
-- [Tests](#tests)
+- Human‑readable Gherkin scenarios
+- Reusable step definitions and helper utilities
+- Environment‑aware configuration and data driven tests
+- HTML and multiple‑cucumber reports
 
 ## Installation
 
-Please run the below commands sequentially from the current/present working directory of the cloned project to download all the dependencies required for the project.
+Run the following commands from the project root to install dependencies and set up the project:
 
-```
+```bash
 npm install
 npm run startUpScript
 npm run executeShellScript
 ```
 
-## Usage
+## Running Tests
 
-We make use of `NODE_ENV` Global variable to execute the tests based on the choice of the environment.
+Tests rely on the `NODE_ENV` variable to target a specific environment (`development`, `testing` or `production`).
 
-In general, we could categorise environment as below - 
-- development(environment used for developmental activities)
-- testing(environment used for conducting either `System Testing` OR `System Integration Testing`)
-- production(for production activities such as business acceptance testing OR business verification testing)
+1. Obtain an API token from [https://gorest.co.in](https://gorest.co.in) and add it to `api-tests/requests/testData/testData-testing/testData-testing.json` under the `Authorization` header.
+2. Execute the tests:
 
-Whenever we want to run the tests, we use `NODE_ENV` with the value of either `development` OR `testing` OR `production`
-
-For our testing activities, we would make use of `testing`. (i.e, `NODE_ENV=testing`)
-
-
-Prerequisites to run the sample tests involves below steps to be executed
-
-* Visit the URL `https://gorest.co.in/consumer/login` and sign-up\sign-in using `Github` OR `Google` account.
-* Once the sign-up is successsful, you would be redirected to the URL `https://gorest.co.in/my-account/access-tokens`.
-* Copy the value of token into the header name `Authorization` (i.e, `"Authorization": "Bearer <copyTokenValueHere>"`. Please refer the file(`api-tests/requests/testData/testData-testing/testData-testing.json`, depending on the scenario we are executing -> update the value of Header to `Bearer <apiTokenValueCopiedFromPreviousStep>`.)
-* Run the existing tests using below command.
-
-```
+```bash
 NODE_ENV=testing npm run cucumber-test
 ```
-Alternatively, we can make use of shell-script to run the tests! 
 
-Hurray!!! Yay!!!
+You can also run the interactive shell script:
 
-Please execute the below command from either `terminal` or `Iterm`
-<Assuming you're on the current/present working directory of the project>
-
-```
+```bash
 ./api-tests/cli/runAcceptanceTest.sh
 ```
 
-When we run the above command, it would prompt us to select from the displayed choice of list. 
-
-- Select `3` for now to execute the test(i.e, Press the numeric `3` on the keyboard to proceed further and press `enter` or `return` keyword).
-- Select the appropriate feature to execute the tests(i.e, Press `1` for now since the `cucumber-tag` used on the feature file is `test`) and press `enter` or `return` keyword.
-- It would show us the fully qualified command on the `terminal` followed by running the tests.
-
-Once the tests are run successfully, reports would be generated under `output` directory(i.e, `api-tests/output/`)
-
--- An `.html` file automatically pops up in a browser on `Mac` once the above command gets executed.
-
-We have 2 types of `.html` report(s) generated(as mentioned below)
-
-- Cucumber's default html report(i.e, Cucumber generates the default HTML report under the directory(`api-tests/output`) with the filename  set to `inBuiltReport.html` as specified under our `cucumber.js` config on the root directory of the project.
-
-- Using the npm module `multiple-cucumber-html-reporter` that gives the beautify HTML report under the directory(`api-tests/output/multiple_cucumber_report/`) with the filename set to `index.html`.(Kudos to its creators: `wswebcreation` for coming up with one of the amazing plugin to show the enriched information of cucumber tests)
-
-Below folder hierarchy is used in building the project.
+## Project Structure
 
 ```
-api-test-automation
+api-automation-test
 ├── api-tests
-|   ├── cli
-|   |   ├── cliParser.js    # This file helps us in validating `NODE_ENV` is a mandatory input while running the tests via shell script.
-|   |   └── runAcceptanceTest.sh  # This shell script helps us in running the test without having to type the fully qualified command on terminal.
-|   ├── config
-|   |   ├── development     # This directory contains all the properties required for executing the test(s) in `DEV` environment.
-|   |   |   └── development.json  # This `json` file will have the user defined properties required for executing the test in `DEV` environment.
-|   |   ├── production      # This file contains all the properties required for executing the test(s) in `PROD` environment.
-|   |   |   └── production.json   # This `json` file will have the user defined properties required for executing the test in `PROD` environment.
-|   |   ├── testing         # This file contains all the properties required for executing the test(s) in `TEST` environment.
-|   |   |   └── testing.json      # This `json` file will have the user defined properties required for executing the test in `TEST` environment.
-|   |   └── ...
-|   ├── cucumber-report
-|   |   ├── report.js      # This file contanins all the options required for generating html report for the npm library `multiple-cucumber-html-reporter`
-|   |   └── reportCucumber.js     # This file contanins all the options required for generating html report for the npm library `cucumber-html-reporter`
-|   ├── feature            # This directory contains the list of `.feature` files required for executing the cucumber tests based on tags.
-|   |   ├── test.feature
-|   |   └── ...
-|   ├── output
-|   |   ├── multiple_cucumber_report
-|   |   |   ├── index.html  # This `.html` file contains the viewable html report generated by npm plugin `multiple-cucumber-html-reporter`
-|   |   |   └── ...
-|   |   ├── inBuiltReport.html    # This `.html` file contains the viewable html report generated by cucumber's default html report 
-|   |   ├── messages.ndjson       # This `.ndjson` file contains the artefact of cucumber execution in `ndjson` format.
-|   |   ├── output.json           # This `.json` file is the artefact of the `cucumber` feature execution.
-|   |   ├── progress.txt          # This text file contains the progress of the cucumber execution.
-|   |   ├── rerun.txt             # This text file contains the re-run result of the cucumber execution.
-|   |   ├── summary               # This text file contains the summary of the cucumber execution.
-|   |   ├── usage.ndjson          # This `.ndjson` file contains the artefact of cucumber execution in `ndjson` format.
-|   |   └── usage.txt             # This text file contains the usage of `step-definition` along with the `pattern` and `location` of it.
-|   ├── prerequisities
-|   |   └── startUpScript.js      # This file contains the required functions to create `output` directory along with the required `.json` file.
-|   ├── requests
-|   |   ├── testData              # This directory contains the collection of all input test-data required to run the given tests.
-|   |   |   ├── testData-development  # This directory contains the collection of `.json` files required for executing `development` env tests.
-|   |   |   |   ├── testData-development.json # This file contains the array of JSON Objects(i.e, collection of scenario data)
-|   |   |   |   └── ...
-|   |   |   ├── testData-production   # This directory contains the collection of `.json` files required for executing `production` env tests.
-|   |   |   |   ├── testData-production.json  # This file contains the array of JSON Objects(i.e, collection of scenario data)
-|   |   |   |   └── ...
-|   |   |   ├── testData-testing      # This directory contains the collection of `.json` files required for executing `testing` env tests.
-|   |   |   |   ├── testData-testing.json     # This file contains the array of JSON Objects(i.e, collection of scenario data)
-|   |   |   |   └── ...
-|   |   └── requestBody.json    # This `.json` file contains the list of input payload required for `PATCH`, `PUT` & `POST` requests.
-|   ├── step_definitions
-|   |   ├── support
-|   |   |   ├── baseWorld.js          # This class file extends the `World` class of `cucumber` along with the required reusable functions.
-|   |   |   ├── dataStore.js          # This file contains the list of reusable functions required for fetching the input data and header functions.
-|   |   |   ├── envConfiguration.js   # This file reads the `name-value` pairs of `.json` file(if exists) from the `config` directory.
-|   |   |   ├── parseResponse.js      # This file contains the list of reusable functions required for playing with the response returned from server.
-|   |   |   └── swagger.js            # This file contains the reusable function to validate the swagger object with the response returned from server.
-|   |   ├── step_definitions.js       # This file contains the collection of `step-definitions` required for executing the feature file.
-|   |   └── ...
-├── cucumber.js                       # This file contains the required configurations to execute our cucumber tests.
-├── customFormat.js                   # This file gets executed when `customReport` is choosen for reporting the artefacts.
-├── package.json                      # This file lists out the required dependencies along with the essential node scripts required for the project.
-├── README.md                         # This file contains the README instructions to setup the project and execute the tests.
+│   ├── features/                 # Gherkin feature files
+│   ├── step_definitions/         # Step implementations
+│   │   └── support/              # Helpers (World, data store, env config, swagger validation)
+│   ├── requests/                 # Request bodies and environment data
+│   ├── config/                   # Environment property files
+│   ├── cucumber-report/          # Report generators
+│   └── prerequisites/            # startUpScript.js to create output dirs
+├── cucumber.js                   # Cucumber configuration
+├── customFormat.js               # Custom formatter for cucumber
 └── ...
-
 ```
+
+## Reporting
+
+After a run, reports are written to `api-tests/output/`:
+
+- `inBuiltReport.html` – Cucumber's default report
+- `multiple_cucumber_report/index.html` – generated by `multiple-cucumber-html-reporter`
+
+## Next Steps for Learners
+
+1. Add new `.feature` files under `api-tests/features/` and map steps in `step_definitions/step_definitions.js`.
+2. Explore `requests/testData/` and `dataStore.js` to learn how data is injected into requests.
+3. Extend utilities in `api-tests/step_definitions/support/` if additional helpers are needed.
+4. Customize `cucumber.js` for new output formats or reporting options.
+
+## Contributing
+
+1. Create a branch from `main`.
+2. Make your changes and open a pull request.
+3. After merge, update the `contributors` section in `package.json`.
 
 ## Credits
 
-A Big Thanks to the following open source libraries(along with tutorials) which helped in building this project.
-
-- https://github.com/wswebcreation/multiple-cucumber-html-reporter
-- https://www.npmjs.com/package/axios
-- https://www.npmjs.com/package/@cucumber/cucumber
+- [multiple-cucumber-html-reporter](https://github.com/wswebcreation/multiple-cucumber-html-reporter)
+- [axios](https://www.npmjs.com/package/axios)
+- [@cucumber/cucumber](https://www.npmjs.com/package/@cucumber/cucumber)
 
 ## License
 
-MIT 🏆 
-
----
-
-
-
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
-
-
-## Features
-
-- Lightweight automation framework for executing API tests using `cucumber-js`
-- Reusable javascript function(s) for better readability of the code.
--  Use `Visual Studio Code` for better traceability.
-
-
-## How to Contribute
-
-- Create a branch out of `main` or `master`.
-- Make required changes to the code and raise a pull request.
-- Once pull request is approved, update the contributors sections in `package.json` file for better traceability.
-
-## Tests
-
-If any code changes are applied ensure all the existing feature test(s) are working as expected.
+MIT 🏆
 
