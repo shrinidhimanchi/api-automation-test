@@ -45,7 +45,7 @@ class dataStore {
                             }
                         }
                     }
-                    throw new error('Scenario Name doesn\'t exists')
+                    throw new Error('Scenario Name doesn\'t exist')
     }
 
     retrieveRequestHeaders(scenarioName){
